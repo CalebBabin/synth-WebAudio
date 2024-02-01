@@ -19,6 +19,7 @@ export default function Synth({
 
 		let oscillatorTargetGain = 0;
 		let oscillatorCurrentGain = 0;
+		const maxGain = 0.5;
 
 		const speedOfChange = 20;
 
@@ -43,7 +44,7 @@ export default function Synth({
 		const handler = (e) => {
 			if (e.detail.instrumentID === instrumentID) {
 				oscillatorTargetFrequency = e.detail.frequency;
-				oscillatorTargetGain = 1;
+				oscillatorTargetGain = maxGain;
 
 				if (!oscillatorStarted) {
 					oscillator.start();
