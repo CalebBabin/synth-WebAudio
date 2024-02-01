@@ -2,7 +2,9 @@ import Keyboard from "./components/keyboard"
 import Synth from "./components/synth"
 
 function App() {
-	return <div className="flex flex-col items-center w-full">
+	return <div className="flex flex-col items-center w-full gap-4">
+		<Synth instrumentID={0} />
+
 		<div className="flex flex-wrap justify-center">
 			<div className="flex flex-col items-center">
 				Octave 2
@@ -19,8 +21,12 @@ function App() {
 				<Keyboard instrumentID={0} octaveRange={[4]} noSharp={false} onlySharp={true} />
 				<Keyboard instrumentID={0} octaveRange={[4]} noSharp={true} />
 			</div>
+			<div className="flex flex-col items-center">
+				Octave 5
+				<Keyboard instrumentID={0} octaveRange={[5]} noSharp={false} onlySharp={true} />
+				<Keyboard instrumentID={0} octaveRange={[5]} noSharp={true} />
+			</div>
 		</div>
-		<Synth instrumentID={0} />
 	</div>
 }
 

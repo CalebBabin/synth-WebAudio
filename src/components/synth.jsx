@@ -21,8 +21,8 @@ export default function Synth({
 		gainNode.connect(audioContext.destination);
 
 		let oscillatorStarted = false;
-		let oscillatorTargetFrequency = 293.66476791740756;
-		let oscillatorCurrentFrequency = 293.66476791740756;
+		let oscillatorTargetFrequency = 0;
+		let oscillatorCurrentFrequency = 0;
 
 		let oscillatorTargetGain = 0;
 		let oscillatorCurrentGain = 0;
