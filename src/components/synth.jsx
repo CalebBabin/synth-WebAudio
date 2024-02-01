@@ -8,10 +8,11 @@ export default function Synth({
 	const gainRef = useRef();
 	const frequencyRef = useRef();
 
-
-
 	useEffect(() => {
 		if (!gainRef.current || !frequencyRef.current) return;
+
+		const speedOfChange = 10; // how fast the frequency and gain changes
+		const tickFrequency = 1000 / 90;
 
 		const audioContext = new AudioContext();
 		const oscillator = audioContext.createOscillator();
@@ -30,7 +31,6 @@ export default function Synth({
 		let oscillatorTargetGain = 0;
 		let oscillatorCurrentGain = 0;
 
-		const speedOfChange = 20;
 
 		let lastTick = 0;
 		const tick = () => {
@@ -51,7 +51,6 @@ export default function Synth({
 			gainNode.gain.setValueAtTime(Math.min(oscillatorCurrentGain, gain), now + delta / 2);
 			gainRef.current.style.height = (oscillatorCurrentGain / gain) * 100 + "%";
 		}
-		const tickFrequency = 1000 / 60;
 		const tickInterval = window.setInterval(tick, tickFrequency);
 
 		const handler = (e) => {
