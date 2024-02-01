@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 export default function Synth({
 	instrumentID = 0,
 	oscillatorType = "sine",
+	gain = 0.5,
 }) {
 	const gainRef = useRef();
 	const frequencyRef = useRef();
@@ -15,10 +16,12 @@ export default function Synth({
 		const audioContext = new AudioContext();
 		const oscillator = audioContext.createOscillator();
 		oscillator.type = oscillatorType;
+		oscillator.frequency.setValueAtTime(0, 0);
 
 		const gainNode = audioContext.createGain();
 		oscillator.connect(gainNode);
 		gainNode.connect(audioContext.destination);
+		gainNode.gain.setValueAtTime(0, 0);
 
 		let oscillatorStarted = false;
 		let oscillatorTargetFrequency = 0;
@@ -26,7 +29,6 @@ export default function Synth({
 
 		let oscillatorTargetGain = 0;
 		let oscillatorCurrentGain = 0;
-		const maxGain = 0.5;
 
 		const speedOfChange = 20;
 
@@ -46,8 +48,8 @@ export default function Synth({
 
 			const deltaGain = (oscillatorTargetGain - oscillatorCurrentGain) * delta * speedOfChange;
 			oscillatorCurrentGain += deltaGain;
-			gainNode.gain.setValueAtTime(oscillatorCurrentGain, now + delta / 2);
-			gainRef.current.style.height = (oscillatorCurrentGain / maxGain) * 100 + "%";
+			gainNode.gain.setValueAtTime(Math.min(oscillatorCurrentGain, gain), now + delta / 2);
+			gainRef.current.style.height = (oscillatorCurrentGain / gain) * 100 + "%";
 		}
 		const tickFrequency = 1000 / 60;
 		const tickInterval = window.setInterval(tick, tickFrequency);
@@ -55,7 +57,7 @@ export default function Synth({
 		const handler = (e) => {
 			if (e.detail.instrumentID === instrumentID) {
 				oscillatorTargetFrequency = e.detail.frequency;
-				oscillatorTargetGain = maxGain;
+				oscillatorTargetGain = gain;
 
 				if (!oscillatorStarted) {
 					oscillator.start();
@@ -66,6 +68,7 @@ export default function Synth({
 		window.addEventListener("instrument-" + instrumentID + "-note", handler);
 
 		const noteStopHandler = () => {
+			if (oscillatorTargetGain === 0) return
 			oscillatorTargetFrequency = oscillatorCurrentFrequency * 0.8;
 			oscillatorTargetGain = 0;
 		}
