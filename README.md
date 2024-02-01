@@ -1,8 +1,13 @@
-# React + Vite
+# Simple WebAudio Synth
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uses the [WebAudio](https://developer.mozilla.org/en-US/docs/Web/API/Web_Audio_API) API to power a simple synth
 
-Currently, two official plugins are available:
+[https://synth-webaudio.opl.io/](https://synth-webaudio.opl.io/)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+```
+npm install
+npm run dev
+```
+
+runs on localhost, port 5173
